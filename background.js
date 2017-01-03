@@ -6,7 +6,7 @@ resetBackground = function (message) {
         );
     });
 
-    localStorage.removeItem('pixels');
+    localStorage.setItem('pixels',0);
 }
 
 chrome.runtime.onMessage.addListener(
@@ -16,6 +16,11 @@ chrome.runtime.onMessage.addListener(
                 var pixels = localStorage.getItem('pixels');
                 sendResponse({scrolled: pixels});
 
+            }
+
+            if (typeof request.scrolledPixels != 'undefined')
+            {
+                localStorage.setItem('pixels',request.scrolledPixels);
             }
 
         });

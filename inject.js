@@ -3,15 +3,16 @@ var readyStateCheckInterval = setInterval(function () {
 
         chrome.runtime.sendMessage({status: "start"},
         function (response) {
-            var scrolled = response.scrolled;
-
+            
             console.log("Started");
 
             window.onscroll = function (e) {
-               var doc = document.documentElement;
-var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-                        
-                        console.log(top);
+                var doc = document.documentElement;
+                var scrolledPixels =Number(response.scrolled)+(window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+                chrome.runtime.sendMessage({scrolledPixels: scrolledPixels},
+                function (response) {
+                    //console.log(response.farewell); 
+                });
             }
 //            if (scrolled !== null)
 //            {
