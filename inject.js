@@ -1,27 +1,25 @@
-chrome.runtime.onMessage.addListener(
-        function (request, sender, sendResponse) {
-            if (request.message.imageUrl !== null) {
-                var imageUrl = request.message.imageUrl;
-                document.body.style.background = "url(" + imageUrl + ") no-repeat center center fixed";
-                document.body.style.backgroundSize = "cover";
-            } else {
-                document.body.style.background = "";
-                document.body.style.backgroundColor = "#e9eaed";
-            }
-        }
-);
-
 var readyStateCheckInterval = setInterval(function () {
     if (document.readyState === "complete") {
 
-        chrome.runtime.sendMessage({backgroundStatus: "require"},
+        chrome.runtime.sendMessage({status: "start"},
         function (response) {
-            var imageUrl = response.imageUrl;
-            if (imageUrl !== null)
-            {
-                document.body.style.background = "url(" + imageUrl + ") no-repeat center center fixed";
-                document.body.style.backgroundSize = "cover";
+            var scrolled = response.scrolled;
+
+            console.log("Started");
+
+
+            function myFunction() {
+                console.log("You scrolled in div.");
             }
+            
+            document.getElementById("contentArea").addEventListener("scroll", myFunction);
+//            if (scrolled !== null)
+//            {
+//                document.body.style.color = "red";
+//            } else
+//            {
+//                document.body.style.color = "green";
+//            }
         });
 
         clearInterval(readyStateCheckInterval);
