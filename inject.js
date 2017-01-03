@@ -8,13 +8,10 @@ var readyStateCheckInterval = setInterval(function () {
             console.log("Started");
 
             window.onscroll = function (e) {
-                var body = document.body,
-                        html = document.documentElement;
-
-                var height = Math.max(body.scrollHeight, body.offsetHeight,
-                        html.clientHeight, html.scrollHeight, html.offsetHeight);
+               var doc = document.documentElement;
+var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
                         
-                        console.log(height);
+                        console.log(top);
             }
 //            if (scrolled !== null)
 //            {
