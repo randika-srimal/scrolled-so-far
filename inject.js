@@ -4,17 +4,34 @@ var readyStateCheckInterval = setInterval(function () {
         chrome.runtime.sendMessage({status: "start"},
         function (response) {
 
+
+            var dpiElement = document.createElement('div');
+            document.body.appendChild(dpiElement);
+            dpiElement.style.height = '1in';
+            dpiElement.style.left = '-100%';
+            dpiElement.style.position = 'absolute';
+            dpiElement.style.top = '-100%';
+            dpiElement.style.width = '1in';
+            dpiElement.id = 'dpi-element';
+            
+            var dpi_y = document.getElementById('dpi-element').offsetHeight;
+
+            console.log(dpi_y);
+
+
             console.log("Started");
 
-            var div = document.createElement('div');
-            document.body.appendChild(div);
-            div.style.right = '32px';
-            div.style.top = '10px';
-            div.style.position = 'fixed';
-            div.style.zIndex = '9999';
-            div.style.fontSize = '20px';
-            div.style.color = 'red';
-            div.id = 'scrolled-km';
+            var scollLengthIndicator = document.createElement('div');
+            document.body.appendChild(scollLengthIndicator);
+            scollLengthIndicator.style.right = '32px';
+            scollLengthIndicator.style.top = '10px';
+            scollLengthIndicator.style.position = 'fixed';
+            scollLengthIndicator.style.zIndex = '9999';
+            scollLengthIndicator.style.fontSize = '20px';
+            scollLengthIndicator.style.color = 'red';
+            scollLengthIndicator.id = 'scrolled-km';
+
+
 
             window.onscroll = function (e) {
                 var doc = document.documentElement;
