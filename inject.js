@@ -13,13 +13,8 @@ var readyStateCheckInterval = setInterval(function () {
             dpiElement.style.top = '-100%';
             dpiElement.style.width = '1in';
             dpiElement.id = 'dpi-element';
-            
+
             var dpi_y = document.getElementById('dpi-element').offsetHeight;
-
-            console.log(dpi_y);
-
-
-            console.log("Started");
 
             var scollLengthIndicator = document.createElement('div');
             document.body.appendChild(scollLengthIndicator);
@@ -28,6 +23,7 @@ var readyStateCheckInterval = setInterval(function () {
             scollLengthIndicator.style.position = 'fixed';
             scollLengthIndicator.style.zIndex = '9999';
             scollLengthIndicator.style.fontSize = '20px';
+            scollLengthIndicator.style.fontWeight = 'bold';
             scollLengthIndicator.style.color = 'red';
             scollLengthIndicator.id = 'scrolled-km';
 
@@ -36,19 +32,12 @@ var readyStateCheckInterval = setInterval(function () {
             window.onscroll = function (e) {
                 var doc = document.documentElement;
                 var scrolledPixels = Number(response.scrolled) + (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-                document.getElementById("scrolled-km").innerText = scrolledPixels;
+                document.getElementById("scrolled-km").innerText = ((scrolledPixels / Number(dpi_y))*0.0254).toFixed(1) +" Meters";
                 chrome.runtime.sendMessage({scrolledPixels: scrolledPixels},
                 function (response) {
                     //console.log(response.farewell); 
                 });
             }
-//            if (scrolled !== null)
-//            {
-//                document.body.style.color = "red";
-//            } else
-//            {
-//                document.body.style.color = "green";
-//            }
         });
 
         clearInterval(readyStateCheckInterval);
