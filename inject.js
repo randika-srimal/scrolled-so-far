@@ -7,12 +7,15 @@ var readyStateCheckInterval = setInterval(function () {
 
             console.log("Started");
 
+            window.onscroll = function (e) {
+                var body = document.body,
+                        html = document.documentElement;
 
-            function myFunction() {
-                console.log("You scrolled in div.");
+                var height = Math.max(body.scrollHeight, body.offsetHeight,
+                        html.clientHeight, html.scrollHeight, html.offsetHeight);
+                        
+                        console.log(height);
             }
-            
-            document.getElementById("contentArea").addEventListener("scroll", myFunction);
 //            if (scrolled !== null)
 //            {
 //                document.body.style.color = "red";
