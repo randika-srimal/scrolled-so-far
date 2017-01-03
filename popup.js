@@ -5,6 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     reset.addEventListener('click', function () {
         var bg = chrome.extension.getBackgroundPage();
-        bg.resetBackground({imageUrl: null});
+        bg.resetScrolledPixels();
     });
 });
