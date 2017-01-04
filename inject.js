@@ -30,9 +30,16 @@ var readyStateCheckInterval = setInterval(function () {
 
 
             window.onscroll = function (e) {
+                if (window.jQuery) {
+                    // jQuery is loaded  
+                    alert("Yeah!");
+                } else {
+                    // jQuery is not loaded
+                    alert("Doesn't Work");
+                }
                 var doc = document.documentElement;
                 var scrolledPixels = Number(response.scrolled) + (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-                document.getElementById("scrolled-km").innerText = ((scrolledPixels / Number(dpi_y))*0.0254).toFixed(1) +" Meters";
+                document.getElementById("scrolled-km").innerText = ((scrolledPixels / Number(dpi_y)) * 0.0254).toFixed(1) + " Meters";
                 chrome.runtime.sendMessage({scrolledPixels: scrolledPixels},
                 function (response) {
                     //console.log(response.farewell); 

@@ -1,3 +1,7 @@
+chrome.tabs.executeScript(null, { file: "jquery-3.1.1.min.js" }, function() {
+    chrome.tabs.executeScript(null, { file: "inject.js" });
+});
+
 resetScrolledPixels = function (message) {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {message: message},
