@@ -29,39 +29,40 @@ var readyStateCheckInterval = setInterval(function () {
 
             var start;
             var end;
+            var scrolledPixelsCount;
 
             $(window)
                     .on("scrollstart", function () {
-                        console.log("start");
                         start = $(window).scrollTop();
-                        // Paint the world yellow when scrolling starts.
-                        //$(document.body).css({background: "yellow"});
                     })
                     .on("scrollstop", function () {
-                        console.log("end");
                         end = $(window).scrollTop();
+
                         if (end > start)
                         {
-                            console.log((end - start) + "down");
+                            scrolledPixelsCount = end - start;
                         } else if (end < start)
                         {
-                            console.log((start - end) + "up");
-
+                            scrolledPixelsCount = start - end;
                         }
-                        // Paint it all green when scrolling stops.
-                        //$(document.body).css({background: "green"});
+
+                        chrome.runtime.sendMessage({status: "start"},
+                        function (response) {
+                            var allScolledPixels = scrolledPixelsCount + Number(response.scrolled);
+
+                            var doc = document.documentElement;
+                            document.getElementById("scrolled-km").innerText = ((allScolledPixels / Number(dpi_y)) * 0.0254).toFixed(1) + " Meters";
+                            chrome.runtime.sendMessage({scrolledPixels: allScolledPixels},
+                            function (response) {
+                                //console.log(response.farewell); 
+                            });
+                        });
                     })
 
 
             window.onscroll = function (e) {
                 //console.log($("window").scrollTop());
-//                var doc = document.documentElement;
-//                var scrolledPixels = Number(response.scrolled) + (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-//                document.getElementById("scrolled-km").innerText = ((scrolledPixels / Number(dpi_y)) * 0.0254).toFixed(1) + " Meters";
-//                chrome.runtime.sendMessage({scrolledPixels: scrolledPixels},
-//                function (response) {
-//                    //console.log(response.farewell); 
-//                });
+
             }
         });
 
