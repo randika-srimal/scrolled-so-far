@@ -17,7 +17,7 @@
     },
     "content_scripts": [{
             "matches": ["https://www.facebook.com/*"],
-            "js": ["jquery.min.js", "inject.js"],
+            "js": ["jquery.min.js","jquery.scrollstop.min.js", "inject.js"],
             "run_at": "document_end"
         }],
     "permissions": [

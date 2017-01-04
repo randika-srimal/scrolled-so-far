@@ -27,23 +27,41 @@ var readyStateCheckInterval = setInterval(function () {
             scollLengthIndicator.style.color = 'red';
             scollLengthIndicator.id = 'scrolled-km';
 
+            var start;
+            var end;
+
+            $(window)
+                    .on("scrollstart", function () {
+                        console.log("start");
+                        start = $(window).scrollTop();
+                        // Paint the world yellow when scrolling starts.
+                        //$(document.body).css({background: "yellow"});
+                    })
+                    .on("scrollstop", function () {
+                        console.log("end");
+                        end = $(window).scrollTop();
+                        if (end > start)
+                        {
+                            console.log((end - start) + "down");
+                        } else if (end < start)
+                        {
+                            console.log((start - end) + "up");
+
+                        }
+                        // Paint it all green when scrolling stops.
+                        //$(document.body).css({background: "green"});
+                    })
 
 
             window.onscroll = function (e) {
-                if (window.jQuery) {
-                    // jQuery is loaded  
-                    alert("Yeah!");
-                } else {
-                    // jQuery is not loaded
-                    alert("Doesn't Work");
-                }
-                var doc = document.documentElement;
-                var scrolledPixels = Number(response.scrolled) + (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-                document.getElementById("scrolled-km").innerText = ((scrolledPixels / Number(dpi_y)) * 0.0254).toFixed(1) + " Meters";
-                chrome.runtime.sendMessage({scrolledPixels: scrolledPixels},
-                function (response) {
-                    //console.log(response.farewell); 
-                });
+                //console.log($("window").scrollTop());
+//                var doc = document.documentElement;
+//                var scrolledPixels = Number(response.scrolled) + (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+//                document.getElementById("scrolled-km").innerText = ((scrolledPixels / Number(dpi_y)) * 0.0254).toFixed(1) + " Meters";
+//                chrome.runtime.sendMessage({scrolledPixels: scrolledPixels},
+//                function (response) {
+//                    //console.log(response.farewell); 
+//                });
             }
         });
 
