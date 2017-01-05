@@ -6,21 +6,36 @@ resetScrolledPixels = function (message) {
         );
     });
 
-    localStorage.setItem('pixels',0);
+    localStorage.setItem('pixels', 0);
 }
 
 chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
-            if (request.status === "start")
+            if (request.msg === "start")
             {
                 var pixels = localStorage.getItem('pixels');
-                sendResponse({scrolled: pixels});
+                var realWorldItem = localStorage.getItem('realWorldItem');
+
+                if (pixels == null)
+                {
+                    localStorage.setItem('pixels', 0);
+                    pixels = 0;
+                }
+
+                if (realWorldItem == null)
+                {
+                    localStorage.setItem('realWorldItem', '');
+                    realWorldItem = '';
+                }
+
+                sendResponse({scrolled: pixels, realWorldItem: realWorldItem});
 
             }
 
-            if (typeof request.scrolledPixels != 'undefined')
+            if (request.msg == 'save')
             {
-                localStorage.setItem('pixels',request.scrolledPixels);
+                localStorage.setItem('pixels', request.allScolledPixels);
+                localStorage.setItem('realWorldItem', request.realWorldItem);
             }
 
         });

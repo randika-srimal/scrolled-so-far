@@ -1,9 +1,10 @@
 var readyStateCheckInterval = setInterval(function () {
     if (document.readyState === "complete") {
 
-        chrome.runtime.sendMessage({status: "start"},
+        chrome.runtime.sendMessage({msg: "start"},
         function (response) {
 
+            var lastRealWorldHeight = response.realWorldItem;
 
             var dpiElement = document.createElement('div');
             document.body.appendChild(dpiElement);
@@ -33,19 +34,21 @@ var readyStateCheckInterval = setInterval(function () {
             scollLengthIndicator.textContent = ((Number(response.scrolled) / Number(dpi_y)) * 0.0254).toFixed(1) + " Meters";
             document.getElementById("indicator-wrapper").appendChild(scollLengthIndicator);
 
-            $("<span id='real-life-height' style='color:white;font-weight:bold;'></span>").insertAfter("#indicator");
+            if (lastRealWorldHeight != "")
+            {
+                $("<span id='real-life-height' style='color:white;font-weight:bold;'>Passed " + lastRealWorldHeight + "</span>").insertAfter("#indicator");
+            }
 
             var start;
             var end;
             var scrolledPixelsCount;
 
             var realWorldHeights = {
-                26: "Big Ben",
-                30: "Eifel tower",
-                32: "Angel Waterfall",
+                5: "Big Ben",
+                8: "Eifel tower",
+                10: "Angel Waterfall",
             };
 
-            var lastRealWorldHeight = "Nothing";
 
             $(window)
                     .on("scrollstart", function () {
@@ -62,7 +65,7 @@ var readyStateCheckInterval = setInterval(function () {
                             scrolledPixelsCount = start - end;
                         }
 
-                        chrome.runtime.sendMessage({status: "start"},
+                        chrome.runtime.sendMessage({msg: "start"},
                         function (response) {
                             var allScolledPixels = scrolledPixelsCount + Number(response.scrolled);
                             var meters = ((allScolledPixels / Number(dpi_y)) * 0.0254).toFixed(1);
@@ -75,10 +78,13 @@ var readyStateCheckInterval = setInterval(function () {
                                 document.getElementById("real-life-height").innerText = lastRealWorldHeight;
                             } else
                             {
-                                document.getElementById("real-life-height").innerText = "Passed " + lastRealWorldHeight;
+                                if (lastRealWorldHeight != '')
+                                {
+                                    document.getElementById("real-life-height").innerText = "Passed " + lastRealWorldHeight;
+                                }
                             }
 
-                            chrome.runtime.sendMessage({scrolledPixels: allScolledPixels},
+                            chrome.runtime.sendMessage({msg: 'save', allScolledPixels: allScolledPixels, realWorldItem: lastRealWorldHeight},
                             function (response) {
                                 //console.log(response.farewell); 
                             });
