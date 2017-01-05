@@ -37,6 +37,9 @@ var readyStateCheckInterval = setInterval(function () {
             if (lastRealWorldHeight != "")
             {
                 $("<span id='real-life-height' style='color:white;font-weight:bold;'>Passed " + lastRealWorldHeight + "</span>").insertAfter("#indicator");
+            }else
+            {
+                $("<span id='real-life-height' style='color:white;font-weight:bold;'></span>").insertAfter("#indicator");
             }
 
             var start;
