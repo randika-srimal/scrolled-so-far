@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     reset.addEventListener('click', function () {
         var bg = chrome.extension.getBackgroundPage();
-        bg.resetScrolledPixels();
+        bg.reset();
         window.close();
     });
 });
