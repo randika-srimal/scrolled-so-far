@@ -44,9 +44,13 @@ var readyStateCheckInterval = setInterval(function () {
             var scrolledPixelsCount;
 
             var realWorldHeights = {
-                5: "Big Ben",
-                8: "Eifel tower",
-                10: "Angel Waterfall",
+                5: "Giraffe",
+                57: "Pisa Tower",
+                300: "Eifel Tower",
+                8848: "Everest Mountain",
+                10994: "Mariana Hole",
+                12742000: "Width of Earth",
+                384400000: "Earth to Moon",
             };
 
 
