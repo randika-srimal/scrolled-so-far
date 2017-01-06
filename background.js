@@ -12,7 +12,7 @@ reset = function (message) {
 
 chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
-            if (request.msg === "start")
+            if (request.msg == "start")
             {
                 var pixels = localStorage.getItem('pixels');
                 var realWorldItem = localStorage.getItem('realWorldItem');
