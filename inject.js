@@ -37,7 +37,7 @@ var readyStateCheckInterval = setInterval(function () {
             if (lastRealWorldHeight != "")
             {
                 $("<span id='real-life-height' style='color:white;font-weight:bold;'>Passed " + lastRealWorldHeight + "</span>").insertAfter("#indicator");
-            }else
+            } else
             {
                 $("<span id='real-life-height' style='color:white;font-weight:bold;'></span>").insertAfter("#indicator");
             }
@@ -81,14 +81,17 @@ var readyStateCheckInterval = setInterval(function () {
 
                             if (Math.round(meters) in realWorldHeights)
                             {
-                                lastRealWorldHeight = realWorldHeights[Math.round(meters)]
-                                document.getElementById("real-life-height").innerText = lastRealWorldHeight;
+                                realWorldHeight = realWorldHeights[Math.round(meters)]
+                                document.getElementById("real-life-height").innerText = realWorldHeight;
                             } else
                             {
-                                if (lastRealWorldHeight != '')
+                                document.getElementById("real-life-height").innerText = "";
+                                
+                                if (response.realWorldItem != '')
                                 {
-                                    document.getElementById("real-life-height").innerText = "Passed " + lastRealWorldHeight;
+                                    document.getElementById("real-life-height").innerText = "Passed " + response.realWorldItem;
                                 }
+
                             }
 
                             chrome.runtime.sendMessage({msg: 'save', allScolledPixels: allScolledPixels, realWorldItem: lastRealWorldHeight},
@@ -97,12 +100,6 @@ var readyStateCheckInterval = setInterval(function () {
                             });
                         });
                     })
-
-
-            window.onscroll = function (e) {
-                //console.log($("window").scrollTop());
-
-            }
         });
 
         clearInterval(readyStateCheckInterval);
